@@ -1,4 +1,4 @@
-Rails.application.secrets.admins.each do |key, value|
+Rails.application.secrets.admins.each do |key, value| 
   unless User.exists?(email: value.downcase)
     puts "Seeding #{key}"
     user = User.new(
