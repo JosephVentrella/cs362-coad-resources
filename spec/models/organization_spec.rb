@@ -8,5 +8,5 @@ RSpec.describe Organization, type: :model do
 		user = User.new
 		expect(user).to respond_to(:email)
 	end
-
+	
 end
