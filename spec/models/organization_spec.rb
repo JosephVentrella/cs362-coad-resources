@@ -99,7 +99,7 @@ RSpec.describe Organization, type: :model do
 	describe "approve" do
 		it "approves" do
 			expected_outcome = :approved
-			expect(organization.status).to eq(expected_outcome)
+			expect(organization.approve).to eq(expected_outcome)
 		end
 	end
 end
