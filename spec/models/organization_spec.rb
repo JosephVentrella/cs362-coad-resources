@@ -96,4 +96,10 @@ RSpec.describe Organization, type: :model do
 			expect(organization.to_s).to eq(expected_name)
 		end
 	end
+	describe "approve" do
+		it "approves" do
+			expected_outcome = :approved
+			expect(organization.status).to eq(expected_outcome)
+		end
+	end
 end
