@@ -6,7 +6,11 @@ RSpec.describe Region, type: :model do
 	end
 
 	describe 'relationships' do
-		it { should have_many(:tickets) }
+		it "has many tickets" do
+			region = Region.new
+			expect(region).to have_many(:tickets)
+		end
 	end
+
 
 end
