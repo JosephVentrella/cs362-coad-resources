@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
-it "ticket exists" do
- ticket = Ticket.new()
+let (:ticket){Ticket.new}
+
+    describe 'relationships' do
+        it { should belong_to(:region) }
+        it { should belong_to(:organization).options(true) }
+    end
 end
 
-it {should belong_to(:region)}
-end
+#optional: true

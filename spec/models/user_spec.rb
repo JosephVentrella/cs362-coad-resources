@@ -2,18 +2,20 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-	let(:user){User.new}
+	
+let(:user) {User.new}
+
 	describe "attributes" do
-	    it "User has an email" do
-			expect(user).to respond_to(:email)
+	  it "has an email" do
+		expect(user).to respond_to(:email)
 		end
 	end
 
-	describe "relationship" do
-			it {should belong_to(:organization)} #relationship test
-    end
+  describe "relationship" do
+	specify {expect(user).to belong_to(:organization)} 
+  end
     
-   describe "validation" do
+  describe "validations" do
 
     it "validates email" do
 	  	expect(user).to validate_presence_of(:email)
@@ -27,8 +29,11 @@ RSpec.describe User, type: :model do
 	  	expect(user).to validate_length_of(:email).is_at_least(1).is_at_most(255)
 	  end
 
-	  it { should validate_uniqueness_of(:email).case_insensitive }
-
-  end
-  
+	  it "should print email" do
+        expected_email = "testtest123@fake.com"
+        user = User.new(email: expected_email)
+        expect(user.to_s).to eq(expected_email)
+	  end
+   end
+	  it {should validate_uniqueness_of(:email).case_insensitive }
 end
