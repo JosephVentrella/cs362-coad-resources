@@ -48,7 +48,6 @@ RSpec.describe Ticket, type: :model do
 		it "validates length of description" do
 			expect(ticket).to validate_length_of(:description).is_at_most(1020).on(:create)
 		end
-		it "validates length of "
 	end
 	describe "#to_s" do
 		it "has a string representation that is the Ticket id" do
@@ -57,5 +56,4 @@ RSpec.describe Ticket, type: :model do
 			expect(ticket.to_s).to eq("Ticket #{expected_id}")
 		end
 	end
-
 end

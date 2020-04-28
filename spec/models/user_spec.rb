@@ -1,14 +1,38 @@
 require 'rails_helper'
-#attribute test
-#association test
-#can do with all model classes
 RSpec.describe User, type: :model do
-	it "exists" do
-		user = User.new
-	end
-	it {should belong_to(:organization)}
-	it "has an email" do
-		user = User.new
+
+	
+let(:user) {User.new}
+
+	describe "attributes" do
+	  it "has an email" do
 		expect(user).to respond_to(:email)
+		end
 	end
+
+  describe "relationship" do
+	specify {expect(user).to belong_to(:organization)} 
+  end
+    
+  describe "validations" do
+
+    it "validates email" do
+	  	expect(user).to validate_presence_of(:email)
+	  end
+
+	  it "validates length of password" do
+	  	expect(user).to validate_length_of(:password).is_at_least(7).is_at_most(255)
+	  end
+
+	  it "validates length of email" do
+	  	expect(user).to validate_length_of(:email).is_at_least(1).is_at_most(255)
+	  end
+
+	  it "should print email" do
+        expected_email = "testtest123@fake.com"
+        user = User.new(email: expected_email)
+        expect(user.to_s).to eq(expected_email)
+	  end
+   end
+	  it {should validate_uniqueness_of(:email).case_insensitive }
 end

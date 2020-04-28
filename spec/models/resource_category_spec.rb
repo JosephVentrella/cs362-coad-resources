@@ -5,4 +5,5 @@ RSpec.describe ResourceCategory, type: :model do
 		resourcecat = ResourceCategory.new
 	end
 
-end
+end	
+ 
