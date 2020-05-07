@@ -108,4 +108,12 @@ RSpec.describe Organization, type: :model do
 			expect(organization.reject).to eq(expected_outcome)
 		end
 	end
+	describe "set_default_status" do
+	  	it "if nil, the default status is submitted " do
+	  		organization = Organization.new
+      		organization.set_default_status
+        	expect(organization.status).to eq("submitted")
+       end
+       
+	end
 end

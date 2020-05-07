@@ -10,9 +10,9 @@ let(:user) {User.new}
 		end
 	end
 
-  #describe "relationship" do
-	#specify {expect(user).to belong_to(:organization)} 
- # end
+  describe "relationship" do
+	specify {expect(user).to belong_to(:organization).optional(true)} 
+  end
     
   describe "validations" do
 
@@ -36,12 +36,12 @@ let(:user) {User.new}
    end
 	  it {should validate_uniqueness_of(:email).case_insensitive }
 
-	  describe "set_default_role" do
-      user2 = User.new
-      user2.set_default_role
-	  it "if nil, the default role is organization " do
-        expect(user2.role).to eq("organization")
-       end
+	describe "set_default_role" do
+	 	 it "if nil, the default role is organization " do
+	 	 	user2 = User.new
+     		user2.set_default_role
+       	    expect(user2.role).to eq("organization")
+       	end
        
 	end
 end
