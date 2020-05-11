@@ -9,6 +9,7 @@ RSpec.describe Ticket, type: :model do
 			expect(ticket).to belong_to(:resource_category)
 		end
 	end
+	
 	describe 'attributes' do
 		it "has a name" do
 			expect(ticket).to respond_to(:name)
