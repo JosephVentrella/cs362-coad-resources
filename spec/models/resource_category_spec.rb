@@ -26,7 +26,7 @@ end
 	end
 
   describe "inactive?" do
-    it "should be return true when not active" do
+    it "should return true when not active" do
       r = ResourceCategory.new
       r.active = (:false)
       expect(r.inactive?).to eq(true)
@@ -50,7 +50,6 @@ end
      
     end
   end
-
 
   describe "find_or_create_by" do
       it "creates a name if one isnt given " do

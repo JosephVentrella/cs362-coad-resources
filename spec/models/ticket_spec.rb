@@ -59,19 +59,32 @@ RSpec.describe Ticket, type: :model do
 	end
 
 	describe "#captured?" do
-      it "is captured if it has an organization" do
-      	t = Ticket.new
-      	baz = Organization.new
-        t.organization = baz
-        expect(t).to be_captured
+	    it "is captured if it has an organization" do
+	    	t = Ticket.new
+	      	baz = Organization.new
+	        t.organization = baz
+	        expect(t).to be_captured
+	    end
   end
-    describe "open?" do
-    it "should be return false when not open" do
-    	t = Ticket.new
-    	t.closed = (:false)
-    	expect(t.open?).to eq(true)
-    end
-    end
 
+ 	describe "scopes" do
+
+ 		let(:open_ticket) {create(:ticket, :open_ticket)}
+ 		let(:closed_ticket) {create(:ticket, :closed_ticket)}
+
+	    describe "open?" do
+	    it "should return false when not open" do
+	    	t = Ticket.new
+	    	t.closed = (:false)
+	    	expect(t.open?).to eq(true)
+	    end
+	end
+		describe "closed?" do
+		it "returns true when ticket is closed" do
+			t = Ticket.new
+			t.closed = (:true)
+			expect(t.closed?).to eq(true)
+		end
+	end
 end
 end

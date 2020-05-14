@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Region, type: :model do
-		it "exists" do
-			region = Region.new
-		end
+
 		let (:region) { build(:region) }
 		describe 'relationships' do
 			it "has many tickets" do
@@ -28,7 +26,6 @@ RSpec.describe Region, type: :model do
 		end
 
 		it "does not creates the name 'unspecified' if one is given " do
-			test_string = "test"
 			expect(region.name).to_not eq('Unspecified')
 		end
 		
