@@ -89,5 +89,28 @@ RSpec.describe Ticket, type: :model do
 				expect(t.closed?).to eq(true)
 			end
 		end
+		describe "all_organization" do 
+			let(:open_ticket_without_organization){create(:ticket, :open_ticket)}
+			let(:closed_ticket_without_organization){create(:ticket, :closed_ticket)}
+			let(:open_ticket_with_organization){create(:ticket, :open_ticket, :organization)}
+			let(:closed_ticket_with_organization){create(:ticket, :closed_ticket, :organization)}
+
+			it "should not return open tickets without an organization" do
+				org_tickets = Ticket.all_organization
+				expect(org_tickets).to_not include(open_ticket_without_organization)
+			end
+			it  "returns all open tickets with an organization" do
+				org_tickets = Ticket.all_organization
+				expect(org_tickets).to include(open_ticket_with_organization)
+			end
+			it "should not return closed tickets without an organization" do
+				org_tickets = Ticket.all_organization
+				expect(org_tickets).to_not include(closed_ticket_without_organization)
+			end
+			it "should not return closed tickets with an organization" do
+				org_tickets = Ticket.all_organization
+				expect(org_tickets).to_not include(closed_ticket_with_organization)
+			end
+		end
 	end
 end
