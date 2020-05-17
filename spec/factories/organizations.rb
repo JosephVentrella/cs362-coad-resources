@@ -1,7 +1,9 @@
 FactoryBot.define do
 	factory :organization do
-		email
-		name
+		sequence :name do |n|
+			"Fake #{n}"
+		end
+		email {'example@test.com'}
 		phone {'111-111-1111'}
 		description{'a test organization'}
 		primary_name {'primary name'}

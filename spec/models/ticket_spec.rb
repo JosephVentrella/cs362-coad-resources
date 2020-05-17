@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
-	let (:ticket){Ticket.new}
+	let (:ticket) {build(:ticket)}
 
 	describe 'relationships' do
 		it { should belong_to(:region) }
@@ -73,18 +73,21 @@ RSpec.describe Ticket, type: :model do
  		let(:closed_ticket) {create(:ticket, :closed_ticket)}
 
 	    describe "open?" do
-	    it "should return false when not open" do
-	    	t = Ticket.new
-	    	t.closed = (:false)
-	    	expect(t.open?).to eq(true)
-	    end
-	end
+		    it "should return an open ticket" do
+		    	open_tickets = Ticket.open
+		    	expect(open_tickets).to include(open_ticket)
+		    end
+		    it "should not return a closed ticket" do
+		    	open_tickets = Ticket.open
+		    	expect(open_tickets).to_not include(closed_ticket)
+		    end
+		end
 		describe "closed?" do
-		it "returns true when ticket is closed" do
-			t = Ticket.new
-			t.closed = (:true)
-			expect(t.closed?).to eq(true)
+			it "returns true when ticket is closed" do
+				t = Ticket.new
+				t.closed = (:true)
+				expect(t.closed?).to eq(true)
+			end
 		end
 	end
-end
 end
