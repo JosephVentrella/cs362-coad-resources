@@ -71,6 +71,10 @@ RSpec.describe Ticket, type: :model do
 
  		let(:open_ticket) {create(:ticket, :open_ticket)}
  		let(:closed_ticket) {create(:ticket, :closed_ticket)}
+ 		let(:open_ticket_without_organization){create(:ticket, :open_ticket)}
+		let(:closed_ticket_without_organization){create(:ticket, :closed_ticket)}
+		let(:open_ticket_with_organization){create(:ticket, :open_ticket, :organization)}
+		let(:closed_ticket_with_organization){create(:ticket, :closed_ticket, :organization)}
 
 	    describe "open?" do
 		    it "should return an open ticket" do
@@ -79,7 +83,7 @@ RSpec.describe Ticket, type: :model do
 		    end
 		    it "should not return a closed ticket" do
 		    	open_tickets = Ticket.open
-		    	expect(open_tickets).to_not include(closed_ticket)
+		    	expect(open_tickets).not_to include(closed_ticket, closed_ticket_with_organization, open_ticket_with_organization)
 		    end
 		end
 		describe "closed?" do
@@ -90,12 +94,8 @@ RSpec.describe Ticket, type: :model do
 			end
 		end
 		describe "all_organization" do 
-			let(:open_ticket_without_organization){create(:ticket, :open_ticket)}
-			let(:closed_ticket_without_organization){create(:ticket, :closed_ticket)}
-			let(:open_ticket_with_organization){create(:ticket, :open_ticket, :organization)}
-			let(:closed_ticket_with_organization){create(:ticket, :closed_ticket, :organization)}
 
-			it "should not return open tickets without an organization" do
+			it "does not return open tickets without an organization" do
 				org_tickets = Ticket.all_organization
 				expect(org_tickets).to_not include(open_ticket_without_organization)
 			end
@@ -103,13 +103,43 @@ RSpec.describe Ticket, type: :model do
 				org_tickets = Ticket.all_organization
 				expect(org_tickets).to include(open_ticket_with_organization)
 			end
-			it "should not return closed tickets without an organization" do
+			it "does not return closed tickets without an organization" do
 				org_tickets = Ticket.all_organization
 				expect(org_tickets).to_not include(closed_ticket_without_organization)
 			end
-			it "should not return closed tickets with an organization" do
+			it "does not return closed tickets with an organization" do
 				org_tickets = Ticket.all_organization
-				expect(org_tickets).to_not include(closed_ticket_with_organization)
+				expect(Ticket.all_organization).to_not include(closed_ticket_with_organization)
+			end
+		end
+		describe "organization" do
+			it "does not return tickets without an organization, or closed tickets" do 
+				expect(Ticket.organization(open_ticket_with_organization.organization_id)).not_to include open_ticket, closed_ticket, closed_ticket_with_organization
+			end
+			it "returns open tickets that have an organization_id" do
+				expect(Ticket.organization(open_ticket_with_organization.organization_id)).to include(open_ticket_with_organization)
+			end
+		end
+		describe "closed_organization" do
+			it "returns a closed ticket with an organization_id " do 
+				expect(Ticket.closed_organization(closed_ticket_with_organization.organization_id)).to include closed_ticket_with_organization
+				expect(Ticket.closed_organization(open_ticket_with_organization.organization_id)).not_to include closed_ticket, open_ticket, open_ticket_with_organization
+			end
+		end
+		describe "region" do
+			it "returns tickets with a region_id" do
+				expect(Ticket.region(open_ticket.region_id)).to include open_ticket
+			end
+			it "will not return tickets without a region_id " do
+				expect(Ticket.region(open_ticket.region_id)).not_to include closed_ticket, open_ticket_with_organization,closed_ticket_with_organization
+			end
+		end
+		describe "resource_category" do
+			it "returns tickets with a resource_category_id" do
+				expect(Ticket.resource_category(open_ticket.resource_category)).to include open_ticket
+			end
+			it "does not return tickets without a resource_category_id" do
+				expect(Ticket.resource_category(open_ticket.resource_category)).not_to include open_ticket_with_organization,closed_ticket_with_organization,closed_ticket
 			end
 		end
 	end

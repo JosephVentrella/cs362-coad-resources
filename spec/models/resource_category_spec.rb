@@ -38,7 +38,6 @@ end
      r = ResourceCategory.new
      r.deactivate
      expect(r.active).to eq(false)
-     
     end
   end
 
