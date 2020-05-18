@@ -53,17 +53,16 @@ RSpec.describe Ticket, type: :model do
 	describe "#to_s" do
 		it "has a string representation that is the Ticket id" do
 			expected_id = 22
-			ticket = Ticket.new(id: expected_id)
+			ticket.id = expected_id
 			expect(ticket.to_s).to eq("Ticket #{expected_id}")
 		end
 	end
 
 	describe "#captured?" do
 	    it "is captured if it has an organization" do
-	    	t = Ticket.new
 	      	baz = Organization.new
-	        t.organization = baz
-	        expect(t).to be_captured
+	        ticket.organization = baz
+	        expect(ticket).to be_captured
 	    end
   end
 
@@ -71,8 +70,6 @@ RSpec.describe Ticket, type: :model do
 
  		let(:open_ticket) {create(:ticket, :open_ticket)}
  		let(:closed_ticket) {create(:ticket, :closed_ticket)}
- 		let(:open_ticket_without_organization){create(:ticket, :open_ticket)}
-		let(:closed_ticket_without_organization){create(:ticket, :closed_ticket)}
 		let(:open_ticket_with_organization){create(:ticket, :open_ticket, :organization)}
 		let(:closed_ticket_with_organization){create(:ticket, :closed_ticket, :organization)}
 
@@ -88,16 +85,15 @@ RSpec.describe Ticket, type: :model do
 		end
 		describe "closed?" do
 			it "returns true when ticket is closed" do
-				t = Ticket.new
-				t.closed = (:true)
-				expect(t.closed?).to eq(true)
+				ticket.closed = (:true)
+				expect(ticket.closed?).to eq(true)
 			end
 		end
 		describe "all_organization" do 
 
 			it "does not return open tickets without an organization" do
 				org_tickets = Ticket.all_organization
-				expect(org_tickets).to_not include(open_ticket_without_organization)
+				expect(org_tickets).to_not include(open_ticket)
 			end
 			it  "returns all open tickets with an organization" do
 				org_tickets = Ticket.all_organization
@@ -105,7 +101,7 @@ RSpec.describe Ticket, type: :model do
 			end
 			it "does not return closed tickets without an organization" do
 				org_tickets = Ticket.all_organization
-				expect(org_tickets).to_not include(closed_ticket_without_organization)
+				expect(org_tickets).to_not include(closed_ticket)
 			end
 			it "does not return closed tickets with an organization" do
 				org_tickets = Ticket.all_organization
