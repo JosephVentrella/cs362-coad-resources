@@ -1,10 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-	let (:organization) {Organization.new}
-	it "exists" do
-		organization = Organization.new
-	end
+	let (:organization) {build(:organization)}
+
 	describe "attributes" do
 		it "should have agreement_one" do
 			expect(organization).to respond_to(:agreement_one)
@@ -91,9 +89,7 @@ RSpec.describe Organization, type: :model do
 	end
 	describe "#to_s" do
 		it "has a string representation that is the name" do
-			expected_name = "TEST"
-			organization = Organization.new(name: expected_name)
-			expect(organization.to_s).to eq(expected_name)
+			expect(organization.to_s).to eq(organization.name)
 		end
 	end
 	describe "approve" do
@@ -111,7 +107,6 @@ RSpec.describe Organization, type: :model do
 	describe "set_default_status" do
 	  	it "if nil, the default status is submitted " do
 	  		organization = Organization.new
-      		organization.set_default_status
         	expect(organization.status).to eq("submitted")
        end
        
