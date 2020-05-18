@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
 	
-let(:user) {User.new}
+let(:user){build(:user)}
 
 	describe "attributes" do
 	  it "has an email" do
@@ -38,9 +38,8 @@ let(:user) {User.new}
 
 	describe "set_default_role" do
 	 	 it "if nil, the default role is organization " do
-	 	 	user2 = User.new
-     		user2.set_default_role
-       	    expect(user2.role).to eq("organization")
+     		user.set_default_role
+       	    expect(user.role).to eq("organization")
        	end
        
 	end
