@@ -20,9 +20,8 @@ RSpec.describe 'Logging in', type: :feature do
 		end
 	end
 	 
-	context "as an admin" do 
+	context "as an admin user" do 
 		let(:admin) { create(:user, :admin) }
-   		before (:each) { admin.confirm }
   		it "displays the admin dashbord when an admin user logs in" do 
      		visit login_path
       		fill_in "user_email", with: admin.email
