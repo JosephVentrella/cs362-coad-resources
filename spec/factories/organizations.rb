@@ -7,22 +7,21 @@ FactoryBot.define do
 			"#{n}FAKE@fake.com"
 		end
 		phone {'111-111-1111'}
-		description{'a test organization'}
 		primary_name {'primary name'}
 		secondary_name {'secondary name'}
 		secondary_phone {'222-222-2222'}
 		status {:approved}
 
 		trait :approved do
-			status {0}
+			status {:approved}
 		end
 
 		trait :rejected do
-			status {2}
+			status {:rejected}
 		end
 
 		trait :locked do 
-			status {3}
+			status {:locked}
 		end
 	end
 end

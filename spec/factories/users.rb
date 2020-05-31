@@ -10,8 +10,8 @@ FactoryBot.define do
 		trait :organization do
 			role {'organization'}
 		end
-		#trait :validate do
-		#	validate = true
-		#end
+		after :create do |user|
+			user.confirm
+		end
 	end
 end
