@@ -13,7 +13,7 @@ FactoryBot.define do
 		end
 
 		trait :id do
-			id{1}
+			id{:id}
 		end
 
 		trait :open_ticket do
